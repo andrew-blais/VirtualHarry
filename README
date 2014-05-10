@@ -1,0 +1,78 @@
+README
+
+Copyright 2014 by Andrew L. Blais.
+This program is distributed under the terms of the 
+GNU General Public License version 3.
+
+Virtual Harry is a python simulation of Harry Porter's relay 
+computer. See his website.
+
+web.cecs.pdx.edu/~harry/Relay/
+
+He has a number of documents explaing how he build his relay
+computer. About two years ago, I though that it would be interesting
+to write a simulation of his machine. At first, I tried javascript.
+The result was a mess. Partly because javascript is complicated by
+having to play nice with a buch of different browsers. Partly because
+writing a simulation of the physical machine is kind of hard. I
+partly got as far as I have by separating what the relays did from 
+how the relays worked together to do what they do. Instead of 
+thinking of relays, I thought of relatively smart winged monkeys 
+flying amonst rows of boxes filled with 0s and 1s. 
+
+The organization of the code follows the model-view-controller
+paradigm. The various parts of the view are in files with "face"
+in their names. They can be run as independent programs, although
+they do not do anything but make an appearance. The model is 
+essentially in core.py, which itself makes use of alu.py, 
+control.py, memory.py, and register.py. The alu can be run on the
+command line.
+
+VirtualHarry is run with: ./VirtualHarry.py
+
+The function of the alu can be set with F0, F1 and F2. Doing this
+determines the result. The chosen function is highlighted in red.
+Pushing "Send Result to Data Bus" does exactly that. By pushing
+the various 8 bit load buttons, their respective reisters are 
+filled with the content of the data bus. Similarly for the address
+bus. 
+
+VirtualHarry can be programed using the included pdf of the "Relay
+Computer Instruction Set". Use this procedure:
+
+(1) Enter an address where the command is to be stored in memory.
+(2) Enter a command into the data bus.
+(3) Push write to memory.
+(4) If the command wasn't halt, go back to (1), else your'e done.
+
+I have made a number of functions in the core that write various 
+programs to the memory. Press the program button, such as "load
+subtract". Then decided whether you want to step through the 
+program's commands or have it just run through all of them. 
+
+If the later, press the "no step" button. It will turn red. Then 
+press the RUN button. You will see a description of each command 
+pass by on the command line. 
+
+If the former, leave the "no step" button alone, and simply press
+RUN. Then, to proceed through the series of commands, press STEP.
+
+For example, enter "00001010" (10) into the data bus.
+Then press "Load C".
+You will see the alu change state.
+Enter "00000110" (6) into the data bus.
+Then press "Load B".
+Again, you will see the alu change state.
+Now, press "test subtract".
+Press RUN.
+
+The command line will scroll by with various descriptions of the 
+commands. Finally, it will stop. I hope. And, the last command
+should be represented by a description of halting. In the A
+register, you should see "00000100", that is, 4.
+
+The "test multiply" function works in essentially the same way.
+Except that the arguments are entered into X and Y. Note that M1 
+must be empty. 
+
+Feedback is desirable.
