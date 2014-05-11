@@ -9,7 +9,7 @@ computer. See his website.
 
 web.cecs.pdx.edu/~harry/Relay/
 
-He has a number of documents explaing how he build his relay
+He has a number of documents explaing how he built his relay
 computer. About two years ago, I though that it would be interesting
 to write a simulation of his machine. At first, I tried javascript.
 The result was a mess. Partly because javascript is complicated by
@@ -26,7 +26,8 @@ in their names. They can be run as independent programs, although
 they do not do anything but make an appearance. The model is 
 essentially in core.py, which itself makes use of alu.py, 
 control.py, memory.py, and register.py. The alu can be run on the
-command line.
+command line. Oh, yes, I used Eclipse as my code editor; the various
+eclipse files are in this archive. 
 
 VirtualHarry is run with: ./VirtualHarry.py
 
@@ -37,8 +38,14 @@ the various 8 bit load buttons, their respective reisters are
 filled with the content of the data bus. Similarly for the address
 bus. 
 
-VirtualHarry can be programed using the included pdf of the "Relay
-Computer Instruction Set". Use this procedure:
+VirtualHarry can be programed using the "Relay Computer Instruction 
+Set", which can be found at:
+
+web.cecs.pdx.edu/~harry/Relay/Original-Circuit-Diagrams/InstructionSet.jpeg
+
+Include instruction set in VH.
+
+Essentially, use this procedure:
 
 (1) Enter an address where the command is to be stored in memory.
 (2) Enter a command into the data bus.
@@ -75,4 +82,4 @@ The "test multiply" function works in essentially the same way.
 Except that the arguments are entered into X and Y. Note that M1 
 must be empty. 
 
-Feedback is desirable.
+Feedback is desirable. I'd like to see additional tests.
