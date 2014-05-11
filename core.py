@@ -1,14 +1,17 @@
 #!/usr/bin/python2.7
 
+
 # Copyright 2014 by Andrew L. Blais.
 # This program is distributed under the terms of the 
 # GNU General Public License version 3.
+
 
 from alu import alu
 from register import register
 from control import control
 from memory import memory
 from thread import start_new_thread
+import pgms
 
 
 class core():
@@ -272,175 +275,30 @@ class core():
 
 # ===== Programs ===============================================================
         
-    def testGOTO(self):
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-        self.MEMORY.writeMemory([1,1,1,0,0,1,1,0]) # GOTO
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1])
-        self.MEMORY.writeMemory([0,0,0,0,0,0,0,0]) # ADDRESS 1
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0])
-        self.MEMORY.writeMemory([0,0,1,0,0,0,0,0]) # ADDRESS 2
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0])
-        self.MEMORY.writeMemory([1,0,1,0,1,1,1,0]) # HALT
+    def loadPGM(self, pgm):
+        for i in pgm:
+            self.MEMORY.setAdress(i[0])
+            self.MEMORY.writeMemory(i[1])
         self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
         self.CALLBACK()
+
+    def testGOTO(self):
+        self.loadPGM(pgms.testGOTOpgm)
 
     def testSETM(self):
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-        self.MEMORY.writeMemory([1,1,0,0,0,0,0,0]) # SET M
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1])
-        self.MEMORY.writeMemory([1,1,1,0,0,1,1,1]) # M1
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0])
-        self.MEMORY.writeMemory([1,1,1,1,1,1,1,1]) # M2
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1])
-        self.MEMORY.writeMemory([1,0,1,0,1,1,1,0]) # HALT
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-        self.CALLBACK()
+        self.loadPGM(pgms.testSETMpgm)
 
     def testLOAD(self):
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-        self.MEMORY.writeMemory([1,0,0,1,0,0,1,1]) # LOAD to D
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1])
-        self.MEMORY.writeMemory([1,0,1,0,1,1,1,0]) # HALT
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0])
-        self.MEMORY.writeMemory([1,1,1,1,1,1,1,1]) # To be loaded
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-        self.CALLBACK()
+        self.loadPGM(pgms.testLOADpgm)
         
     def testSETAB(self):
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-        self.MEMORY.writeMemory([0,1,0,0,0,1,1,1]) # SETAB -- A
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1])
-        self.MEMORY.writeMemory([1,0,1,0,1,1,1,0]) # HALT
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-        self.CALLBACK()
+        self.loadPGM(pgms.testSETABpgm)
 
     def subtract(self):
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-        self.MEMORY.writeMemory([1,0,0,0,0,1,0,1])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1])
-        self.MEMORY.writeMemory([0,0,0,0,1,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0])
-        self.MEMORY.writeMemory([1,0,0,0,0,0,0,1])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1])
-        self.MEMORY.writeMemory([0,0,0,0,1,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0])
-        self.MEMORY.writeMemory([1,0,0,0,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1])
-        self.MEMORY.writeMemory([1,0,1,0,1,1,1,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-        self.CALLBACK()
+        self.loadPGM(pgms.subtractPGM)
 
     def multiply(self):
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-        self.MEMORY.writeMemory([0,0,1,0,1,1,1,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1])
-        self.MEMORY.writeMemory([0,1,0,1,1,0,0,1])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0])
-        self.MEMORY.writeMemory([0,0,0,1,1,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1])
-        self.MEMORY.writeMemory([0,1,1,0,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0])
-        self.MEMORY.writeMemory([0,0,0,1,0,1,1,1])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1])
-        self.MEMORY.writeMemory([1,0,0,0,0,0,1,1])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0])
-        self.MEMORY.writeMemory([1,1,1,1,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1])
-        self.MEMORY.writeMemory([0,0,0,0,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0])
-        self.MEMORY.writeMemory([0,0,0,0,1,0,1,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1])
-        self.MEMORY.writeMemory([0,0,1,0,1,0,0,1])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0])
-        self.MEMORY.writeMemory([0,0,0,0,1,1,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1])
-        self.MEMORY.writeMemory([1,0,0,0,0,1,1,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0])
-        self.MEMORY.writeMemory([0,0,0,1,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1])
-        self.MEMORY.writeMemory([0,1,1,1,1,1,1,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0])
-        self.MEMORY.writeMemory([1,0,0,0,0,0,1,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1])
-        self.MEMORY.writeMemory([0,0,1,0,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0])
-        self.MEMORY.writeMemory([0,0,0,0,1,1,0,1])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1])
-        self.MEMORY.writeMemory([1,0,0,0,0,1,0,1])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0])
-        self.MEMORY.writeMemory([1,1,1,1,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1])
-        self.MEMORY.writeMemory([0,0,0,0,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0])
-        self.MEMORY.writeMemory([0,0,0,1,1,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1])
-        self.MEMORY.writeMemory([0,0,0,0,1,1,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0])
-        self.MEMORY.writeMemory([1,0,0,0,0,0,0,1])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1])
-        self.MEMORY.writeMemory([0,0,1,0,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0])
-        self.MEMORY.writeMemory([0,0,0,0,1,1,0,1])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1])
-        self.MEMORY.writeMemory([1,0,0,0,0,1,1,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0])
-        self.MEMORY.writeMemory([0,0,0,1,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1])
-        self.MEMORY.writeMemory([0,1,1,1,1,1,1,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0])
-        self.MEMORY.writeMemory([1,0,0,0,0,0,1,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1])
-        self.MEMORY.writeMemory([0,0,1,0,1,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0])
-        self.MEMORY.writeMemory([0,0,0,0,1,1,1,1])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1])
-        self.MEMORY.writeMemory([1,0,0,0,0,1,1,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0])
-        self.MEMORY.writeMemory([0,0,1,1,1,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1])
-        self.MEMORY.writeMemory([0,0,0,0,1,1,1,1])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0])
-        self.MEMORY.writeMemory([1,0,0,0,0,1,0,1])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1])
-        self.MEMORY.writeMemory([1,1,1,1,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0])
-        self.MEMORY.writeMemory([0,0,0,0,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1])
-        self.MEMORY.writeMemory([0,0,1,1,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,0])
-        self.MEMORY.writeMemory([0,0,0,0,1,1,0,1])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,1])
-        self.MEMORY.writeMemory([0,0,0,1,0,1,1,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0])
-        self.MEMORY.writeMemory([1,0,0,0,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1])
-        self.MEMORY.writeMemory([0,0,1,0,1,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0])
-        self.MEMORY.writeMemory([1,1,1,0,1,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,1])
-        self.MEMORY.writeMemory([0,0,0,0,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0])
-        self.MEMORY.writeMemory([0,0,1,1,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,1])
-        self.MEMORY.writeMemory([0,0,0,0,1,1,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0])
-        self.MEMORY.writeMemory([1,0,0,0,0,0,0,1])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1])
-        self.MEMORY.writeMemory([0,0,1,0,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0])
-        self.MEMORY.writeMemory([0,0,0,0,1,0,1,1])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1])
-        self.MEMORY.writeMemory([1,0,0,0,1,0,0,1])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0])
-        self.MEMORY.writeMemory([1,1,1,0,0,0,1,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1])
-        self.MEMORY.writeMemory([0,0,0,0,0,0,0,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0])
-        self.MEMORY.writeMemory([0,0,0,0,1,0,1,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1])
-        self.MEMORY.writeMemory([1,0,1,0,1,1,1,0])
-        self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-        self.CALLBACK()
+        self.loadPGM(pgms.multiplyPGM)
 
 # ===== Initialization =========================================================
 
