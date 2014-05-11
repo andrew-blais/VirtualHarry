@@ -11,7 +11,7 @@ web.cecs.pdx.edu/~harry/Relay/
 
 He has a number of documents explaining how he built his relay computer. About 
 two years ago, I though that it would be interesting to write a simulation of 
-his machine. At first, I tried javascript. The result was a mess. Partly because 
+his machine. At first, I tried javascript. The result was a mess. Partly because
 javascript is complicated by having to play nice with a bunch of different 
 browsers. Partly because writing a simulation of the physical machine is kind of
 hard. I partly got as far as I have by separating what the relays did from how 
