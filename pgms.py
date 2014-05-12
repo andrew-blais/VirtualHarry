@@ -1,5 +1,10 @@
 
 
+# Copyright 2014 by Andrew L. Blais.
+# This program is distributed under the terms of the 
+# GNU General Public License version 3.
+
+
 testGOTOpgm = [ \
      ([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [1,1,1,0,0,1,1,0]), \
      ([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], [0,0,0,0,0,0,0,0]), \

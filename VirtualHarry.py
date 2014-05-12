@@ -227,10 +227,10 @@ class VirtualHarry:
 
         self.C = core(self.paintALL)
 
-        self.VHf = Tk()
-        self.VHf.withdraw()
+        self.VH = Tk()
+        self.VH.withdraw()
 
-        self.mkTopFaces(self.VHf)
+        self.mkTopFaces(self.VH)
         self.mkFunctionButtons()
         self.mkDataBusButtons()
         self.mkAddressBusButtons()
@@ -242,11 +242,8 @@ class VirtualHarry:
         self.C.setClockCallback(self.paintClock)
         self.C.runClockThread()
 
-        self.VHf.mainloop()
+        self.VH.mainloop()
 
 if __name__ == '__main__':
-    VH = VirtualHarry()
-
-
-
+    vh = VirtualHarry()
 
