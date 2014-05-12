@@ -65,7 +65,17 @@ Essentially, more or less, use a procedure somewhat like this:
 I have made a number of functions in the core that write various programs to the
 memory. Press the program button, such as "load subtract". Then decided whether 
 you want to step through the program's commands or have it just run through all 
-of them. (Need a function that clears the memory?) 
+of them. 
+
+(Need a function that clears the memory?) 
+
+(By the way, these functions call on lists stored in pgms.py. If you look 
+there, you will see lists of tuples whose first element is a list that 
+corresponds to a memory address and whose second element is a list that 
+corresponds to a command expressed in 0s and 1s that will be stored or written 
+to that address. The significantly decluttered core.py.)
+
+In any case....
 
 If the later, press the "no step" button. It will turn red. Then press the RUN 
 button. You will see a description of each command pass by on the command line. 
@@ -92,9 +102,19 @@ arguments are entered into X and Y. Note that M1 must be empty.
 
 Feedback is desirable. I'd like to see additional tests.
 
+There is an uptime clock. It has nothing to do with VH's computing however. 
+There was an empty space and I thought it would be cool to put an uptime clock
+there. It seems obvious that there should be a way to implement this program in
+a way that also simulates a clock and the timing required by actual physical
+relays. This might be done with buches of threads, I suspect. Human Harry, 
+Porter that is, has a very interesting and informative pdf book that describes
+the workings of the timings and such.
 
+Check it out at:
 
+http://web.cecs.pdx.edu/~harry/Relay/RelayPaper.pdf
 
+There is also a movie....
 
 
 
