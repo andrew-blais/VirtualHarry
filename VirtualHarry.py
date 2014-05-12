@@ -126,6 +126,12 @@ class VirtualHarry:
         c = "red" if self.C.NOSTEP == True else "black"
         self.DF.noStepButton.config(fg=c)
 
+    def paintClock(self):
+        self.C.updateUpTime()
+        self.RF.CLKface.Hsv.set(self.C.H)
+        self.RF.CLKface.Msv.set(self.C.M)
+        self.RF.CLKface.Ssv.set(self.C.S)
+
     def paintALL(self):
         self.paintALU()
         self.paintFunction()
@@ -136,6 +142,7 @@ class VirtualHarry:
         self.paintControl()
         self.paintMemory()
         self.paintNoPause()
+        # self.paintClock()
 
 # Make Buttons =================================================================
 
@@ -217,9 +224,9 @@ class VirtualHarry:
 
     def __init__(self):
         self.mkConstants()
-        
+
         self.C = core(self.paintALL)
-        
+
         self.VHf = Tk()
         self.VHf.withdraw()
 
@@ -231,6 +238,9 @@ class VirtualHarry:
         self.mkSelectButtons()
         self.mkRunButtons()        
         self.paintALL()
+        
+        self.C.setClockCallback(self.paintClock)
+        self.C.runClockThread()
 
         self.VHf.mainloop()
 

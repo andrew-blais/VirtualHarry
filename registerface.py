@@ -7,7 +7,7 @@
 
 
 from Tkinter import LabelFrame, StringVar, Label, Button, GROOVE, Tk
-
+from clockface import clockface
 
 class registerface(LabelFrame):
 # Utilities ====================================================================
@@ -97,12 +97,14 @@ class registerface(LabelFrame):
         self.Ylabels  = self.mkLabelList(self.Y,  7)
 
     def mkHaltButton(self):
-        self.HALTbutton = Button(self)
-        self.HALTbutton.config(text = "HALT")
+        self.HALTbutton = self.mkButton("HALT", 6, 11, 1, 2)
         self.HALTbutton.config(fg = "red")
         self.HALTbutton.config(command =  self.quit)
-        self.HALTbutton.grid(row=0, column=11, columnspan=2, \
-                             rowspan=5, sticky="wens")
+
+    def mkUpTime(self):
+        self.CLKface = clockface(self)
+        self.CLKface.grid(row=0, column=11, \
+                          rowspan=5, columnspan=2, sticky="wens")
 
 # ===== gets ===================================================================
 
@@ -125,6 +127,7 @@ class registerface(LabelFrame):
         self.mkSelectButtons()        
         self.mkRegisterLabels()
         self.mkHaltButton()
+        self.mkUpTime()
 
         self.pack()
 

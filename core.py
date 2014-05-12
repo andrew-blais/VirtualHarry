@@ -12,6 +12,7 @@ from control import control
 from memory import memory
 from thread import start_new_thread
 import pgms
+from time import time, sleep
 
 
 class core():
@@ -345,6 +346,11 @@ class core():
                               (1,0,1) : self.selectM2, \
                               (1,1,0) : self.selectX, \
                               (1,1,1) : self.selectY }
+        
+        self.start = time()
+        self.H = ""
+        self.M = ""
+        self.S = ""
 
 # ===== ALU ====================================================================
 
@@ -625,7 +631,37 @@ class core():
         self.MEMORY.writeMemory(self.DATABUS)
         self.CALLBACK()
 
+# ===== Clock ==================================================================
+
+    def updateUpTime(self):
+        U = time() - self.start
+        
+        secs = int( U % 60 )
+        mins = int( U / 60 )
+        hrs = int( U / (60 * 60))
+        
+        self.H = " Hours  :%3d".ljust(12," ") % hrs
+        self.M = " Minutes:%3d".ljust(12," ") % mins
+        self.S = " Seconds:%3d".ljust(12," ") % secs
+
+    def setClockCallback(self, ccb):
+        self.ClockCallback = ccb
+    
+    def runClock(self):
+        while True:
+            self.updateUpTime()
+            self.ClockCallback()
+            sleep(1)
+
+    def runClockThread(self):
+        start_new_thread(self.runClock, ())
+
 # ==============================================================================
+
+
+
+
+
 
 
 
