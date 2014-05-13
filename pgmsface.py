@@ -22,13 +22,21 @@ class pgmsface(LabelFrame):
         self.var = StringVar(self)
         self.var.set("testGOTOpgm")
 
-        self.choices = ["testGOTOpgm", "testSETMpgm", "testLOADpgm", \
-                  "testSETABpgm", "subtractPGM", "multiplyPGM"]
+        self.choices = ["testGOTOpgm", \
+                        "testSETMpgm", \
+                        "testLOADpgm", \
+                        "testSETABpgm", \
+                        "subtractPGM", \
+                        "multiplyPGM"]
 
         self.button = Button(self, text="Load Test")
         self.button.grid(row=0, column=0)
         
         self.option = OptionMenu(self, self.var, *self.choices)
+        # Use * when you're not sure how many arguments might be passed to 
+        # your function. This makes it possible to pass an arbitrary number 
+        # of arguments to your function.
+        
         self.option.grid(row=0, column=1)
         
         self.pack()

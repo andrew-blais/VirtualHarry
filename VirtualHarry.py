@@ -213,20 +213,12 @@ class VirtualHarry:
 
 
     def mkRunButtons(self):
-#         self.DF.multiplyButton.config(command = self.C.multiply)
-#         self.DF.subtractButton.config(command = self.C.subtract)
         self.DF.runButton.config(command = self.C.run)
-#         self.DF.testSETABButton.config(command = self.C.testSETAB)
-#         self.DF.testLOADButton.config(command = self.C.testLOAD)
-#         self.DF.testSETMButton.config(command = self.C.testSETM)
-#         self.DF.testGOTOMButton.config(command = self.C.testGOTO)
         self.DF.stepButton.config(command = self.C.step)
         self.DF.noStepButton.config(command = self.C.noStep)
 
-        v = self.PF.var
-        p = pgms.testDictionary
-        c = lambda P = p, V = v: self.C.loadPGM(P, V)
-        self.PF.button.config(command = c)
+        self.PF.button.config(command = \
+                lambda : self.C.loadPGM(pgms.testDictionary, self.PF.var))
 
 # Initialization ===============================================================
 

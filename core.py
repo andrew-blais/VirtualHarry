@@ -11,7 +11,6 @@ from register import register
 from control import control
 from memory import memory
 from thread import start_new_thread
-import pgms
 from time import time, sleep
 
 
@@ -110,7 +109,7 @@ class core():
         self.memWrite()
 
     def RET_MOV16(self):
-        print  "RETURN / MOVE 16 bits >>> " + str(self.Inst)
+        print  "RETURN / MOVE 16 bits: " + str(self.Inst)
         RUN = True
         if self.Inst[5:7] == [1,1]:
             print "HALT "
@@ -129,14 +128,18 @@ class core():
 
                 if self.Inst[5:7] == [1,0]:
                     self.selectJ()
+                    
                 self.loadXY()
             else: # d is PC
                 if self.Inst[5:7] == [0,0]:
                     self.selectM()
+                    
                 if self.Inst[5:7] == [0,1]:
                     self.selectXY()
+                    
                 if self.Inst[5:7] == [1,0]:
                     self.selectJ()
+
                 self.loadPC()
         return RUN
 
@@ -275,7 +278,7 @@ class core():
         start_new_thread(self.FetchIncrementExecute, ())
 
 # ===== Programs ===============================================================
-        
+
     def loadPGM(self, p, v):
         pgm = p[v.get()]        
         for i in pgm:
@@ -283,24 +286,6 @@ class core():
             self.MEMORY.writeMemory(i[1])
         self.MEMORY.setAdress([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
         self.CALLBACK()
-
-    def testGOTO(self):
-        self.loadPGM(pgms.testGOTOpgm)
-
-    def testSETM(self):
-        self.loadPGM(pgms.testSETMpgm)
-
-    def testLOAD(self):
-        self.loadPGM(pgms.testLOADpgm)
-        
-    def testSETAB(self):
-        self.loadPGM(pgms.testSETABpgm)
-
-    def subtract(self):
-        self.loadPGM(pgms.subtractPGM)
-
-    def multiply(self):
-        self.loadPGM(pgms.multiplyPGM)
 
 # ===== Initialization =========================================================
 
@@ -658,8 +643,6 @@ class core():
         start_new_thread(self.runClock, ())
 
 # ==============================================================================
-
-
 
 
 
