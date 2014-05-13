@@ -62,6 +62,7 @@ class memoryface(LabelFrame):
 if __name__ == '__main__':
 	root = Tk()
 	mf = memoryface(root)
+	#mf.grid(row=0, column=0)
 	root.mainloop()
 
 

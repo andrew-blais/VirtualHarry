@@ -276,7 +276,8 @@ class core():
 
 # ===== Programs ===============================================================
         
-    def loadPGM(self, pgm):
+    def loadPGM(self, p, v):
+        pgm = p[v.get()]        
         for i in pgm:
             self.MEMORY.setAdress(i[0])
             self.MEMORY.writeMemory(i[1])

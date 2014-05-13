@@ -27,7 +27,7 @@ class addressbusface(LabelFrame):
             self.AB.append(self.mkStringVar("0"))
             self.ABbuttons.append(Button(self, textvariable=self.AB[i]))
             self.ABbuttons[i].grid(row=0, column=i)
-
+            
         self.pack()
 
 if __name__ == '__main__':
@@ -35,6 +35,7 @@ if __name__ == '__main__':
     if len(argv) > 1: 
         root.geometry(argv[1])
     abf = addressbusface(root)
+    #abf.grid(row=0, column=0)
     root.mainloop()
 
 

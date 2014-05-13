@@ -1,35 +1,41 @@
 #!/usr/bin/python2.7
 
-# using Tkinter's Optionmenu() as a combobox
-try:
-# Python2
-    import Tkinter as tk
-except ImportError:
-# Python3
-    import tkinter as tk
 
-def select():
-    sf = "value is %s" % var.get()
-    root.title(sf)
-    # optional
-    color = var.get()
-    root['bg'] = color
+# Copyright 2014 by Andrew L. Blais.
+# This program is distributed under the terms of the 
+# GNU General Public License version 3.
 
-root = tk.Tk()
-# use width x height + x_offset + y_offset (no spaces!)
-root.geometry("%dx%d+%d+%d" % (330, 80, 200, 150))
-root.title("tk.Optionmenu as combobox")
 
-var = tk.StringVar(root)
-# initial value
-var.set('red')
+from Tkinter import LabelFrame, GROOVE, StringVar, OptionMenu, Button, Tk
 
-choices = ['red', 'green', 'blue', 'yellow','white', 'magenta']
-option = tk.OptionMenu(root, var, *choices)
-option.pack(side='left', padx=10, pady=10)
 
-button = tk.Button(root, text="check value slected", command=select)
-button.pack(side='left', padx=20, pady=10)
+class pgmsface(LabelFrame):
 
-root.mainloop()
+
+    def __init__(self, x):
+        LabelFrame.__init__(self, x)
+        self.config(relief=GROOVE)
+        self.config(borderwidth=2)
+        self.config(text = "Testing")
+        self.config(labelanchor = "n")
+
+        self.var = StringVar(self)
+        self.var.set("testGOTOpgm")
+
+        self.choices = ["testGOTOpgm", "testSETMpgm", "testLOADpgm", \
+                  "testSETABpgm", "subtractPGM", "multiplyPGM"]
+
+        self.button = Button(self, text="Load Test")
+        self.button.grid(row=0, column=0)
+        
+        self.option = OptionMenu(self, self.var, *self.choices)
+        self.option.grid(row=0, column=1)
+        
+        self.pack()
+
+if __name__ == '__main__':
+    root = Tk()
+    pf = pgmsface(root)
+    root.mainloop()
+    
 

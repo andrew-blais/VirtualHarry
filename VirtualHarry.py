@@ -17,6 +17,8 @@ from addressbusface import addressbusface
 from memoryface import memoryface
 from core import core
 from decoderface import decoderface
+from pgmsface import pgmsface
+import pgms
 
 
 class VirtualHarry:
@@ -38,12 +40,12 @@ class VirtualHarry:
         self.COREFACE     = Toplevel(r)
         self.REGISTERFACE = Toplevel(r)
         self.CONTROLFACE  = Toplevel(r)
-        self.FOURFACE    = Toplevel(r)
+        self.FIVEFACE     = Toplevel(r)
 
         self.COREFACE.geometry("+80+40")
         self.REGISTERFACE.geometry("+280+40")
         self.CONTROLFACE.geometry("+410+325")
-        self.FOURFACE.geometry("+740+40")
+        self.FIVEFACE.geometry("+740+40")
 
         self.ALUF = aluface(self.COREFACE)
         self.FF = functionface(self.COREFACE)
@@ -52,10 +54,11 @@ class VirtualHarry:
         self.RF = registerface(self.REGISTERFACE)
         self.CF = controlface(self.CONTROLFACE)
 
-        self.ABF = addressbusface(self.FOURFACE)
-        self.DBF = databusface(self.FOURFACE)
-        self.MF = memoryface(self.FOURFACE)
-        self.DF = decoderface(self.FOURFACE)
+        self.ABF = addressbusface(self.FIVEFACE)
+        self.DBF = databusface(self.FIVEFACE)
+        self.MF = memoryface(self.FIVEFACE)
+        self.DF = decoderface(self.FIVEFACE)
+        self.PF = pgmsface(self.FIVEFACE)
 
 # Paint Functions ==============================================================
 
@@ -210,15 +213,20 @@ class VirtualHarry:
 
 
     def mkRunButtons(self):
-        self.DF.multiplyButton.config(command = self.C.multiply)
-        self.DF.subtractButton.config(command = self.C.subtract)
+#         self.DF.multiplyButton.config(command = self.C.multiply)
+#         self.DF.subtractButton.config(command = self.C.subtract)
         self.DF.runButton.config(command = self.C.run)
-        self.DF.testSETABButton.config(command = self.C.testSETAB)
-        self.DF.testLOADButton.config(command = self.C.testLOAD)
-        self.DF.testSETMButton.config(command = self.C.testSETM)
-        self.DF.testGOTOMButton.config(command = self.C.testGOTO)
+#         self.DF.testSETABButton.config(command = self.C.testSETAB)
+#         self.DF.testLOADButton.config(command = self.C.testLOAD)
+#         self.DF.testSETMButton.config(command = self.C.testSETM)
+#         self.DF.testGOTOMButton.config(command = self.C.testGOTO)
         self.DF.stepButton.config(command = self.C.step)
         self.DF.noStepButton.config(command = self.C.noStep)
+
+        v = self.PF.var
+        p = pgms.testDictionary
+        c = lambda P = p, V = v: self.C.loadPGM(P, V)
+        self.PF.button.config(command = c)
 
 # Initialization ===============================================================
 

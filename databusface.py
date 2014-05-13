@@ -39,5 +39,8 @@ class databusface(LabelFrame):
 if __name__ == '__main__':
     root = Tk()
     dbf = databusface(root)
+    #dbf.grid(row=0, column=0)
     root.mainloop()
+
+
 
