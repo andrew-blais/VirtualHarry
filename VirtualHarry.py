@@ -19,7 +19,7 @@ from core import core
 from decoderface import decoderface
 from pgmsface import pgmsface
 import pgms
-
+from processface import processface
 
 class VirtualHarry:
 # Support ======================================================================
@@ -40,12 +40,12 @@ class VirtualHarry:
         self.COREFACE     = Toplevel(r)
         self.REGISTERFACE = Toplevel(r)
         self.CONTROLFACE  = Toplevel(r)
-        self.FIVEFACE     = Toplevel(r)
+        self.SIXFACE     = Toplevel(r)
 
         self.COREFACE.geometry("+80+40")
         self.REGISTERFACE.geometry("+280+40")
         self.CONTROLFACE.geometry("+410+325")
-        self.FIVEFACE.geometry("+740+40")
+        self.SIXFACE.geometry("+740+40")
 
         self.ALUF = aluface(self.COREFACE)
         self.FF = functionface(self.COREFACE)
@@ -54,11 +54,12 @@ class VirtualHarry:
         self.RF = registerface(self.REGISTERFACE)
         self.CF = controlface(self.CONTROLFACE)
 
-        self.ABF = addressbusface(self.FIVEFACE)
-        self.DBF = databusface(self.FIVEFACE)
-        self.MF = memoryface(self.FIVEFACE)
-        self.DF = decoderface(self.FIVEFACE)
-        self.PF = pgmsface(self.FIVEFACE)
+        self.ABF = addressbusface(self.SIXFACE)
+        self.DBF = databusface(self.SIXFACE)
+        self.MF = memoryface(self.SIXFACE)
+        self.DF = decoderface(self.SIXFACE)
+        self.PF = pgmsface(self.SIXFACE)
+        self.PROCF = processface(self.SIXFACE)
 
 # Paint Functions ==============================================================
 
@@ -135,6 +136,9 @@ class VirtualHarry:
         self.RF.CLKface.Msv.set(self.C.M)
         self.RF.CLKface.Ssv.set(self.C.S)
 
+    def paintText(self, t):
+        self.PROCF.addText(t)
+
     def paintALL(self):
         self.paintALU()
         self.paintFunction()
@@ -145,7 +149,6 @@ class VirtualHarry:
         self.paintControl()
         self.paintMemory()
         self.paintNoPause()
-        # self.paintClock()
 
 # Make Buttons =================================================================
 
@@ -241,6 +244,8 @@ class VirtualHarry:
         
         self.C.setClockCallback(self.paintClock)
         self.C.runClockThread()
+
+        self.C.setTextCallback(self.paintText)
 
         self.VH.mainloop()
 

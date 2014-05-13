@@ -36,27 +36,27 @@ class core():
 # Decode & Execute =============================================================
 
     def fetchAndIncrement(self):
-        print "<<< FETCH >>>"
+        self.TextCallback("<<< FETCH >>>")
         self.selectPC()
         self.memRead()
         self.loadInst()
-        print "<<< INCREMENT >>>"
+        self.TextCallback("<<< INCREMENT >>>")
         self.loadINC()
         self.selectINC()
         self.loadPC()
 
     def MOV(self):
-        print "MOVE"
+        self.TextCallback("MOVE")
         if self.Inst[2:5] == self.Inst[5:8]:
             self.setDataBus([0,0,0,0,0,0,0,0])
-            print "D = S: set to [0,0,0,0,0,0,0,0]"
+            self.TextCallback("D = S: set to [0,0,0,0,0,0,0,0]")
         else:
-            print "Moving stuff: "
+            self.TextCallback("Moving stuff: ")
             self.regSelectMap[tuple(self.Inst[5:8])]()
         self.regLoadMap[tuple(self.Inst[2:5])]()
 
     def SETAB(self):
-        print "SETAB"
+        self.TextCallback("SETAB")
         p = [1,1,1] if self.Inst[3] == 1 else [0,0,0]
         # Since the negative numbers are represented by "two's
         # complement" the first three digits will be either 0s or
@@ -70,7 +70,7 @@ class core():
         print str(p + self.Inst[3:8])
 
     def ALUfunction(self):
-        print "ALU function: " + str(self.Inst[5:8])
+        self.TextCallback("ALU function: " + str(self.Inst[5:8]))
         self.setFunction(self.Inst[5:8])
         self.selectResult()
         if self.Inst[4] == 0:
@@ -79,7 +79,7 @@ class core():
             self.loadD()
 
     def LOAD(self):
-        print "LOAD"
+        self.TextCallback("LOAD")
         self.selectM()
         self.memRead()
         if self.Inst[6:8] == [0,0]:
@@ -94,7 +94,7 @@ class core():
                     self.loadD()
 
     def STORE(self):
-        print "STORE"
+        self.TextCallback("STORE")
         self.selectM()
         if self.Inst[6:8] == [0,0]:
             self.selectA()
@@ -109,16 +109,16 @@ class core():
         self.memWrite()
 
     def RET_MOV16(self):
-        print  "RETURN / MOVE 16 bits: " + str(self.Inst)
+        self.TextCallback("RETURN / MOVE 16 bits: " + str(self.Inst))
         RUN = True
         if self.Inst[5:7] == [1,1]:
-            print "HALT "
+            self.TextCallback("HALT ")
             # Set PC to zero................................
             self.mvAtoZ([0,0,0,0,0,0,0,0], self.CONTROL.PC1)
             self.mvAtoZ([0,0,0,0,0,0,0,0], self.CONTROL.PC2)
             RUN = False 
         else:
-            print "MOV16"
+            self.TextCallback("MOV16")
             if self.Inst[4] == 0: # d is XY
                 if self.Inst[5:7] == [0,0]:
                     self.selectM()
@@ -144,14 +144,14 @@ class core():
         return RUN
 
     def INC(self):
-        print "INC: XY > XY + 1"
+        self.TextCallback("INC: XY > XY + 1")
         self.selectXY()
         self.loadINC()
         self.selectINC()
         self.loadXY()
 
     def SETM(self):
-        print "SETM: Move next 16 bits to M"
+        self.TextCallback("SETM: Move next 16 bits to M")
         self.memRead()
         self.loadM1()
         self.loadINC()
@@ -163,7 +163,7 @@ class core():
         self.loadPC()
 
     def GOTO(self):
-        print "GOTO: set address bus, PC, to next 16 bits"
+        self.TextCallback("GOTO: set address bus, PC, to next 16 bits")
         self.memRead()
         self.loadJ1()
         self.loadINC()
@@ -174,7 +174,7 @@ class core():
         self.loadPC()
 
     def CALL(self):
-        print "CALL: set address bus to next 16 bits & PC => XY"
+        self.TextCallback("CALL: set address bus to next 16 bits & PC => XY")
         # CALL is like GOTO except that the address of the next instruction 
         # after CALL is saved in XY.
         self.memRead()
@@ -190,7 +190,7 @@ class core():
         self.loadPC()
 
     def BC(self):
-        print "Branch Conditionally"
+        self.TextCallback("Branch Conditionally")
         C0 = (self.Inst[3] == 1) and (self.ALU.SIGN  == 1) 
         C1 = (self.Inst[4] == 1) and (self.ALU.CARRY == 0)
         C2 = (self.Inst[5] == 1) and (self.ALU.ZERO  == 1)
@@ -213,7 +213,7 @@ class core():
             self.loadPC()
 
     def execute(self):
-        print "<<< EXECUTE >>>"
+        self.TextCallback("<<< EXECUTE >>>")
         RUN = True
         if self.Inst[0] == 0:
             if self.Inst[1] == 0:
@@ -246,7 +246,9 @@ class core():
                             self.CALL()
                     else:
                         self.BC()
-        print "*************************************************"
+        self.TextCallback(\
+            "*************************************************")
+        
         return RUN
 
 # ===== RUN & testing ==========================================================
@@ -272,7 +274,8 @@ class core():
             if self.RUN == True and self.NOSTEP == False:
                 self.pause() # Time to inspect VH
 
-        print "================================================================"
+        self.TextCallback(\
+        "================================================================")
 
     def run(self):
         start_new_thread(self.FetchIncrementExecute, ())
@@ -363,22 +366,22 @@ class core():
         self.CALLBACK()
 
     def setFunction(self, f):
-        print "setFunction"
+        self.TextCallback("setFunction")
         self.ALU.setFUNCTION(f)
         self.CALLBACK()
         
     def setF0(self, i):
-        print "set F0"
+        self.TextCallback("set F0")
         self.ALU.setF0(i)
         self.CALLBACK()
 
     def setF1(self, i):
-        print "set F1"
+        self.TextCallback("set F1")
         self.ALU.setF1(i)
         self.CALLBACK()
 
     def setF2(self, i):
-        print "set F2"        
+        self.TextCallback("set F2")
         self.ALU.setF2(i)
         self.CALLBACK()
 
@@ -407,124 +410,124 @@ class core():
         return self.DATABUS
 
     def printDataBus(self):
-        print "data bus: " + str(self.getDataBus())
+        self.TextCallback("data bus: " + str(self.getDataBus()))
 
 # ===== Register Load ==========================================================
 
     def loadA(self):
-        print "loadA"
+        self.TextCallback("loadA")
         self.REGISTER.loadA(self.DATABUS)
         self.CALLBACK()
 
     def loadB(self):
-        print "loadB"
+        self.TextCallback("loadB")
         self.REGISTER.loadB(self.DATABUS)
         self.ALU.setB(self.DATABUS)
         self.CALLBACK()
             
     def loadC(self):
-        print "loadC"
+        self.TextCallback("loadC")
         self.REGISTER.loadC(self.DATABUS)
         self.ALU.setC(self.DATABUS)
         self.CALLBACK()
             
     def loadD(self):
-        print "loadD"
+        self.TextCallback("loadD")
         self.REGISTER.loadD(self.DATABUS)
         self.CALLBACK()
             
     def loadM1(self):
-        print "loadM1"
+        self.TextCallback("loadM1")
         self.REGISTER.loadM1(self.DATABUS)
         self.CALLBACK()
             
     def loadM2(self):
-        print "loadM2"
+        self.TextCallback("loadM2")
         self.REGISTER.loadM2(self.DATABUS)
         self.CALLBACK()
                     
     def loadX(self):
-        print "loadX"
+        self.TextCallback("loadX")
         self.REGISTER.loadX(self.DATABUS)
         self.CALLBACK()
 
     def loadY(self):
-        print "loadY"
+        self.TextCallback("loadY")
         self.REGISTER.loadY(self.DATABUS)
         self.CALLBACK()
 
     def loadXY(self):
-        print "loadXY"
+        self.TextCallback("loadXY")
         self.REGISTER.loadXY(self.ADDRESSBUS)
         self.CALLBACK()
 
 # ===== Control Load ===========================================================
 
     def loadJ1(self):
-        print "load j1"
+        self.TextCallback("load j1")
         self.CONTROL.loadJ1(self.DATABUS)
         self.CALLBACK()
 
     def loadJ2(self):
-        print "load j2"
+        self.TextCallback("load j2")
         self.CONTROL.loadJ2(self.DATABUS)
         self.CALLBACK()
 
     def loadInst(self):
         self.CONTROL.loadInst(self.DATABUS)
         self.mvAtoZ(self.DATABUS, self.Inst)
-        print "load Inst: " + str(self.Inst)
+        self.TextCallback("load Inst: " + str(self.Inst))
         self.CALLBACK()
 
     def loadINC(self):
-        print "loadINC"
+        self.TextCallback("loadINC")
         self.CONTROL.loadINC()
         self.CALLBACK()
 
     def loadPC(self):
-        print "loadPC"
+        self.TextCallback("loadPC")
         self.CONTROL.loadPC(self.ADDRESSBUS)
         self.CALLBACK()
 
 # ===== Register Select ========================================================
 
     def selectA(self):
-        print "selectA"
+        self.TextCallback("selectA")
         self.mvAtoZ(self.REGISTER.A, self.DATABUS)
         self.CALLBACK()
             
     def selectB(self):
-        print "selectB"
+        self.TextCallback("selectB")
         self.mvAtoZ(self.REGISTER.B, self.DATABUS)
         self.CALLBACK()
         
     def selectC(self):
-        print "selectC"
+        self.TextCallback("selectC")
         self.mvAtoZ(self.REGISTER.C, self.DATABUS)
         self.CALLBACK()
 
     def selectD(self):
-        print "selectD"
+        self.TextCallback("selectD")
         self.mvAtoZ(self.REGISTER.D, self.DATABUS)
         self.CALLBACK()
             
     def selectM1(self):
-        print "selectM1"
+        self.TextCallback("selectM1")
         self.mvAtoZ(self.REGISTER.M1, self.DATABUS)
         self.CALLBACK()
         
     def selectM2(self):
-        print "selectM2"
+        self.TextCallback("selectM2")
         self.mvAtoZ(self.REGISTER.M2, self.DATABUS)
         self.CALLBACK()
                     
     def selectX(self):
-        print "selectX"
+        self.TextCallback("selectX")
         self.mvAtoZ(self.REGISTER.X, self.DATABUS)
         self.CALLBACK()
 
     def selectY(self):
-        print "selectY"
+        self.TextCallback("selectY")
         self.mvAtoZ(self.REGISTER.Y, self.DATABUS)
         self.CALLBACK()
             
@@ -539,32 +542,32 @@ class core():
         self.CALLBACK()
 
     def selectM(self):
-        print "selectM"
+        self.TextCallback("selectM")
         self.mvToAddressBus(self.REGISTER.M1, self.REGISTER.M2)
 
     def selectXY(self):
-        print "selectXY"
+        self.TextCallback("selectXY")
         self.mvToAddressBus(self.REGISTER.X, self.REGISTER.Y)
 
 # ==============================================================================            
             
     def selectResult(self):
-        print "selectRESULT"
+        self.TextCallback("selectRESULT")
         self.mvAtoZ(self.ALU.RESULT, self.DATABUS)
         self.CALLBACK()
 
 # ==============================================================================
 
     def selectJ(self):
-        print "selectJ"
+        self.TextCallback("selectJ")
         self.mvToAddressBus(self.CONTROL.J1, self.CONTROL.J2)
 
     def selectPC(self):
-        print "selectPC"
+        self.TextCallback("selectPC")
         self.mvToAddressBus(self.CONTROL.PC1, self.CONTROL.PC2)
 
     def selectINC(self):
-        print "selectINC"
+        self.TextCallback("selectINC")
         self.mvToAddressBus(self.CONTROL.INC1, self.CONTROL.INC2)
 
 # ===== Addressbus =============================================================
@@ -585,7 +588,7 @@ class core():
         return self.ADDRESSBUS
 
     def printAddressBus(self):
-        print "address bus: " + str(self.ADDRESSBUS)
+        self.TextCallback("address bus: " + str(self.ADDRESSBUS))
 
 # ===== Control ================================================================
 
@@ -608,12 +611,12 @@ class core():
         self.CALLBACK()
 
     def memRead(self):
-        print "memRead"
+        self.TextCallback("memRead")
         self.mvAtoZ(self.MEMORY.readMemory(), self.DATABUS)
         self.CALLBACK()
 
     def memWrite(self):
-        print "memWrite"
+        self.TextCallback("memWrite")
         self.MEMORY.writeMemory(self.DATABUS)
         self.CALLBACK()
 
@@ -644,7 +647,8 @@ class core():
 
 # ==============================================================================
 
-
+    def setTextCallback(self, tcb):
+        self.TextCallback = tcb
 
 
 
