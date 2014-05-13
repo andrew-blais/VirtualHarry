@@ -67,7 +67,7 @@ class core():
             self.loadA()
         else:
             self.loadB()
-        print str(p + self.Inst[3:8])
+        self.TextCallback(str(p + self.Inst[3:8]))
 
     def ALUfunction(self):
         self.TextCallback("ALU function: " + str(self.Inst[5:8]))

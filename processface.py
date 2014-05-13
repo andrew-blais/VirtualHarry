@@ -38,6 +38,7 @@ class processface(LabelFrame):
 
     def addText(self, t):
         self.text.insert(END, t + "\n")
+        self.text.yview(END)
 
     def mkRandomString(self):
         L = ascii_uppercase
