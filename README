@@ -63,9 +63,9 @@ Essentially, more or less, use a procedure somewhat like this:
     not, since halt may be buried somewhere that the program eventually finds.)
 
 I have made a number of functions in the core that write various programs to the
-memory. Press the program button, such as "load subtract". Then decided whether 
-you want to step through the program's commands or have it just run through all 
-of them. 
+memory. Under "Testing", select a test program such as "multiplyPGM" or 
+"testGOTOpgm". Press "Load Test". Then decided whether you want to step through
+the program's commands or have it just run through all of them without pause.
 
 (Need a function that clears the memory?) 
 
