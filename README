@@ -116,5 +116,15 @@ http://web.cecs.pdx.edu/~harry/Relay/RelayPaper.pdf
 
 There is also a movie....
 
+The memory module has four buttons: random, clear, read and write. Read and 
+write do exactly those things relative to the current value of the address bus
+and the data bus. Random fills all pow(2,15) bytes with random 0s and 1s. Push 
+"random mem". Then push "NOSTEPS". Then push "RUN", and you'll have the moral 
+equivalent of a lava lamp. This raises interesting questions about whether VH
+will HALT for any given random filling of the memory. Hmmm...the halting 
+problem.... How does that proof go?
+
+
+
 
 
