@@ -196,7 +196,27 @@ class core():
         C2 = (self.Inst[5] == 1) and (self.ALU.ZERO  == 1)
         C3 = (self.Inst[6] == 1) and (self.ALU.ZERO  == 0)
 
+        c0 = "S+" if self.Inst[3] == 1 else "S-"
+        c1 = "Cy+" if self.Inst[4] == 1 else "Cy-"
+        c2 = "Z1+" if self.Inst[5] == 1 else "Z1-"
+        c3 = "Z0+" if self.Inst[6] == 1 else "Z0-"
+
+        a0 = "S=1" if self.ALU.SIGN  == 1 else "S=0"
+        a1 = "Cy=0" if self.ALU.CARRY  == 0 else "Cy=1"
+        a2 = "Z=1" if self.ALU.ZERO  == 1 else "Z=0"        
+        a3 = "Z=0" if self.ALU.ZERO  == 0 else "Z=1"        
+        
+        m0 = c0 + " " + a0 + "\n"
+        m1 = c1 + " " + a1 + "\n"
+        m2 = c2 + " " + a2 + "\n"
+        m3 = c3 + " " + a3 + "\n"
+
+        M = m0 + m1 + m2 + m3
+        
+        self.TextCallback(M)
+
         if C0 or C1 or C2 or C3:
+            self.TextCallback("Branch")
             self.memRead()
             self.loadJ1()
             self.loadINC()
@@ -206,6 +226,7 @@ class core():
             self.selectJ()
             self.loadPC()
         else:
+            self.TextCallback("No Branch")
             self.loadINC()
             self.selectINC()
             self.loadINC()

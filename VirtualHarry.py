@@ -45,9 +45,13 @@ class VirtualHarry:
         self.SEQUENCERFACE = Toplevel(r)
 
         self.COREFACE.geometry("+50+40")
+        self.COREFACE.title("ALU")
         self.REGISTERFACE.geometry("+250+40")
+        self.REGISTERFACE.title("Register")
         self.CONTROLFACE.geometry("+380+325")
+        self.CONTROLFACE.title("Control")
         self.SEQUENCERFACE.geometry("+710+40")
+        self.SEQUENCERFACE.title("Sequencer")
 
         self.ALUF = aluface(self.COREFACE)
         self.FF = functionface(self.COREFACE)
