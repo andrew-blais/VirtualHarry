@@ -7,6 +7,7 @@
 
 
 from itertools import product
+from random import randint
 
 
 class memory:
@@ -37,6 +38,15 @@ class memory:
 
     def writeMemory(self, x):
         self.mvAtoZ(x, self.M[self.ADDRESS])
+        
+    def clearMemory(self):
+        for i in self.M.keys():
+            self.mvAtoZ([0,0,0,0,0,0,0,0], self.M[i])
+
+    def randomMemory(self):
+        for i in self.M.keys():
+            r = [ randint(0,1) for unused_i in range(8) ]
+            self.mvAtoZ(r, self.M[i])
 
 # ===== Initialization =========================================================
 

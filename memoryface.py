@@ -29,7 +29,7 @@ class memoryface(LabelFrame):
 	def mkLabelList(self, SV, r):
 		R = []
 		for i in range(8):
-			R.append(self.mkLabel(SV[i], r, i+2))
+			R.append(self.mkLabel(SV[i], r, i+4))
 		return R
 
 	def mkButton(self, t, r, c, rs=1, cs=1):
@@ -49,8 +49,11 @@ class memoryface(LabelFrame):
 		self.config(text = "Memory")
 		self.config(labelanchor = "n")
 
-		self.READ = self.mkButton("mem read", 0, 0)
-		self.WRITE = self.mkButton("mem write", 0, 1)
+		self.CLEAR = self.mkButton("mem clear", 0, 0)
+		self.RANDOM = self.mkButton("mem random", 0, 1)
+		self.READ = self.mkButton("mem read", 0, 2)
+		self.WRITE = self.mkButton("mem write", 0, 3)
+
 
 		self.CURRENT  = [ self.mkStringVar("0") for unused_i in range(8) ]
 		self.CURRENTlabels  = self.mkLabelList(self.CURRENT, 0)

@@ -20,6 +20,8 @@ from decoderface import decoderface
 from pgmsface import pgmsface
 import pgms
 from processface import processface
+from time import sleep
+
 
 class VirtualHarry:
 # Support ======================================================================
@@ -37,15 +39,15 @@ class VirtualHarry:
         self.Range16 = range(16)
 
     def mkTopFaces(self, r):
-        self.COREFACE     = Toplevel(r)
+        self.COREFACE = Toplevel(r)
         self.REGISTERFACE = Toplevel(r)
-        self.CONTROLFACE  = Toplevel(r)
-        self.SIXFACE     = Toplevel(r)
+        self.CONTROLFACE = Toplevel(r)
+        self.SEQUENCERFACE = Toplevel(r)
 
-        self.COREFACE.geometry("+80+40")
-        self.REGISTERFACE.geometry("+280+40")
-        self.CONTROLFACE.geometry("+410+325")
-        self.SIXFACE.geometry("+740+40")
+        self.COREFACE.geometry("+50+40")
+        self.REGISTERFACE.geometry("+250+40")
+        self.CONTROLFACE.geometry("+380+325")
+        self.SEQUENCERFACE.geometry("+710+40")
 
         self.ALUF = aluface(self.COREFACE)
         self.FF = functionface(self.COREFACE)
@@ -54,12 +56,12 @@ class VirtualHarry:
         self.RF = registerface(self.REGISTERFACE)
         self.CF = controlface(self.CONTROLFACE)
 
-        self.ABF = addressbusface(self.SIXFACE)
-        self.DBF = databusface(self.SIXFACE)
-        self.MF = memoryface(self.SIXFACE)
-        self.DF = decoderface(self.SIXFACE)
-        self.PF = pgmsface(self.SIXFACE)
-        self.PROCF = processface(self.SIXFACE)
+        self.ABF = addressbusface(self.SEQUENCERFACE)
+        self.DBF = databusface(self.SEQUENCERFACE)
+        self.MF = memoryface(self.SEQUENCERFACE)
+        self.DF = decoderface(self.SEQUENCERFACE)
+        self.PF = pgmsface(self.SEQUENCERFACE)
+        self.PROCF = processface(self.SEQUENCERFACE)
 
 # Paint Functions ==============================================================
 
@@ -84,7 +86,9 @@ class VirtualHarry:
         self.ALUF.tagLabels[j].config(fg="red")
         for y in self.ALUF.registerLabels[j]:
             y.config(fg="red")
-        
+        # A pair of dictionaries in ALUF would make 
+        # this considerably less of a hack. Works.
+
     def paintFunction(self):
         v  = self.C.getFunction()
         sv = self.FF.getFunction()
@@ -138,6 +142,7 @@ class VirtualHarry:
 
     def paintText(self, t):
         self.PROCF.addText(t)
+        sleep(2)
 
     def paintALL(self):
         self.paintALU()
@@ -222,6 +227,9 @@ class VirtualHarry:
 
         self.PF.button.config(command = \
                 lambda : self.C.loadPGM(pgms.testDictionary, self.PF.var))
+
+        self.MF.CLEAR.config(command = self.C.memClear)
+        self.MF.RANDOM.config(command = self.C.memRandom)
 
 # Initialization ===============================================================
 

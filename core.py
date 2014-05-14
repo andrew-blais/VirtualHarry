@@ -619,6 +619,16 @@ class core():
         self.TextCallback("memWrite")
         self.MEMORY.writeMemory(self.DATABUS)
         self.CALLBACK()
+        
+    def memClear(self):
+        self.TextCallback("memClear")
+        self.MEMORY.clearMemory()
+        self.CALLBACK()
+        
+    def memRandom(self):
+        self.TextCallback("memRandom")
+        self.MEMORY.randomMemory()
+        self.CALLBACK()
 
 # ===== Clock ==================================================================
 
