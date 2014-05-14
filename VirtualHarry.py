@@ -142,7 +142,7 @@ class VirtualHarry:
 
     def paintText(self, t):
         self.PROCF.addText(t)
-        sleep(2)
+        sleep(0.03)
 
     def paintALL(self):
         self.paintALU()

@@ -26,6 +26,11 @@ class pgmsface(LabelFrame):
                         "testSETMpgm", \
                         "testLOADpgm", \
                         "testSETABpgm", \
+                        "testINCpgm", \
+                        "testALUpgm", \
+                        "testMOVpgm", \
+                        "testCBpgm1", \
+                        "testCBpgm2", \
                         "subtractPGM", \
                         "multiplyPGM"]
 
