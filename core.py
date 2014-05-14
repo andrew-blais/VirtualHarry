@@ -196,8 +196,8 @@ class core():
         C2 = (self.Inst[5] == 1) and (self.ALU.ZERO  == 1)
         C3 = (self.Inst[6] == 1) and (self.ALU.ZERO  == 0)
 
-        c0 = "S+" if self.Inst[3] == 1 else "S-"
-        c1 = "Cy+" if self.Inst[4] == 1 else "Cy-"
+        c0 = "S1+" if self.Inst[3] == 1 else "S1-"
+        c1 = "Cy0+" if self.Inst[4] == 1 else "Cy0-"
         c2 = "Z1+" if self.Inst[5] == 1 else "Z1-"
         c3 = "Z0+" if self.Inst[6] == 1 else "Z0-"
 
