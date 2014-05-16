@@ -8,6 +8,8 @@
 
 from Tkinter import LabelFrame, StringVar, Label, Button, GROOVE, Tk
 from clockface import clockface
+#import tkFont
+
 
 class registerface(LabelFrame):
 # Utilities ====================================================================
@@ -115,6 +117,9 @@ class registerface(LabelFrame):
 
     def __init__(self, x):
         LabelFrame.__init__(self, x)
+#        self.default_font = tkFont.nametofont("TkDefaultFont")
+#        self.default_font.configure(family="Helvetica",size=10) 
+
         self.RANGE = range(8)
         self.config(relief=GROOVE)
         self.config(borderwidth=2)

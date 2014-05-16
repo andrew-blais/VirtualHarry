@@ -7,6 +7,7 @@
 
 
 from Tkinter import LabelFrame, StringVar, Label, Button, GROOVE, Tk
+#import tkFont
 
 
 class aluface(LabelFrame):
@@ -94,10 +95,6 @@ class aluface(LabelFrame):
         for i in self.RANGE:
             self.ADDlabels[i].config(fg="red")        
 
-# ===== sets ===================================================================
-
-
-
 # ===== gets ===================================================================
 
     def getResult(self):
@@ -110,6 +107,8 @@ class aluface(LabelFrame):
 
     def __init__(self, x):
         LabelFrame.__init__(self, x)
+#        self.default_font = tkFont.nametofont("TkDefaultFont")
+#        self.default_font.configure(family="Helvetica",size=10)
         self.config(relief=GROOVE)
         self.config(borderwidth=2)
         self.config(text = "ALU")

@@ -7,6 +7,7 @@
 
 
 from Tkinter import LabelFrame, StringVar, Label, Button, GROOVE, Tk
+#import tkFont
 
 
 class controlface(LabelFrame):
@@ -98,6 +99,9 @@ class controlface(LabelFrame):
 
     def __init__(self, x):
         LabelFrame.__init__(self, x)
+#        self.default_font = tkFont.nametofont("TkDefaultFont")
+#        self.default_font.configure(family="Helvetica",size=10)
+
         self.RANGE = range(8)
         self.config(text = "Control Unit")
         self.config(labelanchor = "n")

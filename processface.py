@@ -13,23 +13,27 @@ from random import randint
 from string import ascii_uppercase, ascii_lowercase
 from time import sleep
 from thread import start_new_thread
+#import tkFont
 
 
 class processface(LabelFrame):
     
     def __init__(self, x):
         LabelFrame.__init__(self, x)
+#        self.default_font = tkFont.nametofont("TkDefaultFont")
+#        self.default_font.configure(family="Helvetica",size=10) 
         self.config(relief=GROOVE)
         self.config(borderwidth=2)
         self.config(text = "Process")
         self.config(labelanchor = "n")
     
-        self.text = Text(self, height=26, width=80)
+        self.text = Text(self, height=21, width=80)
+        self.text.configure(font=("Courier", 11, "bold"), bg="black", fg="green")
         
         self.scroll = Scrollbar(self, command=self.text.yview)
         
         self.text.configure(yscrollcommand=self.scroll.set)
-        
+
         self.text.pack(side=LEFT, padx=3, pady=2)
 
         self.scroll.pack(side=RIGHT, fill=Y, padx=3, pady=2)

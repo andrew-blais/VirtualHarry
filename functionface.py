@@ -7,7 +7,7 @@
 
 
 from Tkinter import Frame, StringVar, Button, GROOVE, Label, Tk
-
+#import tkFont
 
 class functionface(Frame):
 
@@ -26,6 +26,8 @@ class functionface(Frame):
 
     def __init__(self, x):
         Frame.__init__(self, x)
+#        self.default_font = tkFont.nametofont("TkDefaultFont")
+#        self.default_font.configure(family="Helvetica",size=10) 
         self.config(relief=GROOVE)
         self.config(borderwidth=2)
         self.grid_columnconfigure(0, weight=0)

@@ -7,6 +7,7 @@
 
 
 from Tkinter import Frame, Label, StringVar, GROOVE, Tk
+#import tkFont
 
 
 class statesface(Frame):
@@ -37,6 +38,8 @@ class statesface(Frame):
 
     def __init__(self, x):
         Frame.__init__(self, x)
+#        self.default_font = tkFont.nametofont("TkDefaultFont")
+#        self.default_font.configure(family="Helvetica",size=10) 
         self.config(relief=GROOVE)
         self.config(borderwidth=2)
         self.mkStateLabels()

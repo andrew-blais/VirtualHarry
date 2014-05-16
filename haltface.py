@@ -7,6 +7,7 @@
 
 
 from Tkinter import Frame, GROOVE, Button, Tk
+#import tkFont
 
 
 class haltface(Frame):
@@ -14,6 +15,9 @@ class haltface(Frame):
     def __init__(self, x):
         Frame.__init__(self, x)
         self.config(relief=GROOVE)
+#        self.default_font = tkFont.nametofont("TkDefaultFont")
+#        self.default_font.configure(family="Helvetica",size=10) 
+        
         self.config(borderwidth=2)
 
         self.HALTbutton = Button(self)

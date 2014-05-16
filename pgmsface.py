@@ -7,6 +7,7 @@
 
 
 from Tkinter import LabelFrame, GROOVE, StringVar, OptionMenu, Button, Tk
+#import tkFont
 
 
 class pgmsface(LabelFrame):
@@ -14,6 +15,8 @@ class pgmsface(LabelFrame):
 
     def __init__(self, x):
         LabelFrame.__init__(self, x)
+#        self.default_font = tkFont.nametofont("TkDefaultFont")
+#        self.default_font.configure(family="Helvetica",size=10)         
         self.config(relief=GROOVE)
         self.config(borderwidth=2)
         self.config(text = "Testing")

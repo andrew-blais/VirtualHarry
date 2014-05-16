@@ -7,12 +7,16 @@
 
 
 from Tkinter import LabelFrame, GROOVE, Label, Tk, StringVar
+#import tkFont
 
 
 class clockface(LabelFrame):
     
     def __init__(self, x):
         LabelFrame.__init__(self, x)
+#        self.default_font = tkFont.nametofont("TkDefaultFont")
+#        self.default_font.configure(family="Helvetica",size=10)
+
         self.config(relief=GROOVE)
         self.config(borderwidth=2)
         self.config(text = "Up Time")

@@ -7,7 +7,7 @@
 
 
 from Tkinter import LabelFrame, StringVar, GROOVE, Button, Tk
-
+#import tkFont
 
 class databusface(LabelFrame):
 
@@ -21,6 +21,8 @@ class databusface(LabelFrame):
 
     def __init__(self, x):
         LabelFrame.__init__(self, x)
+#        self.default_font = tkFont.nametofont("TkDefaultFont")
+#        self.default_font.configure(family="Helvetica",size=10)        
         self.config(relief=GROOVE)
         self.config(borderwidth=2)
         self.config(text = "8 bit Data Bus")

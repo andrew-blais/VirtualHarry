@@ -7,6 +7,7 @@
 
 
 from Tkinter import LabelFrame, StringVar, Label, Button, Tk, GROOVE
+#import tkFont
 
 
 class memoryface(LabelFrame):
@@ -44,6 +45,8 @@ class memoryface(LabelFrame):
 
 	def __init__(self, x):
 		LabelFrame.__init__(self, x)
+#		self.default_font = tkFont.nametofont("TkDefaultFont")
+#		self.default_font.configure(family="Helvetica",size=10) 
 		self.config(relief=GROOVE)
 		self.config(borderwidth=2)
 		self.config(text = "Memory")
