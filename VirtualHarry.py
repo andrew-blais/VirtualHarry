@@ -6,7 +6,7 @@
 # GNU General Public License version 3.
 
 
-from Tkinter import Tk, Toplevel
+from Tkinter import Tk, Toplevel, Frame
 from aluface import aluface
 from functionface import functionface
 from statesface import statesface
@@ -21,6 +21,7 @@ from pgmsface import pgmsface
 import pgms
 from processface import processface
 from time import sleep
+from encoderface import encoderface
 
 
 class VirtualHarry:
@@ -39,34 +40,45 @@ class VirtualHarry:
         self.Range16 = range(16)
 
     def mkTopFaces(self, r):
-        self.COREFACE = Toplevel(r)
-        self.REGISTERFACE = Toplevel(r)
-        self.CONTROLFACE = Toplevel(r)
-        self.SEQUENCERFACE = Toplevel(r)
+        
+        self.WHOLE = Toplevel(r)
+        self.WHOLE.title("Virtual Harry")
+        self.WHOLE.geometry("+70+40")
+        
+        self.UNITY = Frame(self.WHOLE)
+        self.UNITY.grid(row=0, column=0)
 
-        self.COREFACE.geometry("+50+40")
-        self.COREFACE.title("ALU")
-        self.REGISTERFACE.geometry("+250+40")
-        self.REGISTERFACE.title("Register")
-        self.CONTROLFACE.geometry("+380+325")
-        self.CONTROLFACE.title("Control")
-        self.SEQUENCERFACE.geometry("+710+40")
-        self.SEQUENCERFACE.title("Sequencer")
+        self.RF = registerface(self.UNITY)       
+        self.FF = functionface(self.UNITY)
+        self.SF = statesface(self.UNITY)
+        self.ALUF = aluface(self.UNITY)
+        self.CF = controlface(self.UNITY)
+        self.EF = encoderface(self.UNITY)
 
-        self.ALUF = aluface(self.COREFACE)
-        self.FF = functionface(self.COREFACE)
-        self.SF = statesface(self.COREFACE)
+        self.RF.grid(row=0,column=0, columnspan=2)
+        self.FF.grid(row=1,column=0)
+        self.SF.grid(row=1,column=1)
+        self.ALUF.grid(row=2,column=0)
+        self.CF.grid(row=2,column=1)
+        self.EF.grid(row=3, column=0, columnspan=2)
 
-        self.RF = registerface(self.REGISTERFACE)
-        self.CF = controlface(self.CONTROLFACE)
+        self.SEQUENCERFACE = Frame(self.WHOLE)
+        self.SEQUENCERFACE.grid(row=0, column=1)
 
         self.ABF = addressbusface(self.SEQUENCERFACE)
-        self.DBF = databusface(self.SEQUENCERFACE)
-        self.MF = memoryface(self.SEQUENCERFACE)
         self.DF = decoderface(self.SEQUENCERFACE)
+        self.DBF = databusface(self.SEQUENCERFACE)
         self.PF = pgmsface(self.SEQUENCERFACE)
+        self.MF = memoryface(self.SEQUENCERFACE)
         self.PROCF = processface(self.SEQUENCERFACE)
 
+        self.ABF.grid(row=0, column=0, columnspan=2)
+        self.DF.grid(row=1, column=0)
+        self.DBF.grid(row=1, column=1)
+        self.PF.grid(row=2, column=0)
+        self.MF.grid(row=2, column=1)
+        self.PROCF.grid(row=3, column=0, columnspan=2)
+        
 # Paint Functions ==============================================================
 
     def paintALU(self):
