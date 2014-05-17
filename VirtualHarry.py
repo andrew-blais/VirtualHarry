@@ -247,6 +247,20 @@ class VirtualHarry:
         self.MF.CLEAR.config(command = self.C.memClear)
         self.MF.RANDOM.config(command = self.C.memRandom)
 
+        self.EF.codeButton.config(command = self.parse)
+
+# Run Buttons ==================================================================
+
+    def parse(self):
+        I = self.EF.INSTRUCTION.get()
+        self.C.ENCODER.setCode(I)
+        self.C.ENCODER.parse()
+
+        if self.C.ENCODER.eval == True:
+            self.EF.eval.set(str(self.C.ENCODER.INSTRUCTION))
+        else:
+            self.EF.eval.set("> INVALID <")
+
 # Initialization ===============================================================
 
     def __init__(self):

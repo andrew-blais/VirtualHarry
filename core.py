@@ -12,6 +12,7 @@ from control import control
 from memory import memory
 from thread import start_new_thread
 from time import time, sleep
+from encodercore import encodercore
 
 
 class core():
@@ -362,6 +363,8 @@ class core():
         self.M = ""
         self.S = ""
 
+        self.ENCODER = encodercore()
+
 # ===== ALU ====================================================================
 
     def getResult(self):
@@ -680,9 +683,6 @@ class core():
 
     def setTextCallback(self, tcb):
         self.TextCallback = tcb
-
-
-
 
 
 
