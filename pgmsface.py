@@ -6,12 +6,19 @@
 # GNU General Public License version 3.
 
 
-from Tkinter import LabelFrame, GROOVE, StringVar, OptionMenu, Button, Tk
+from Tkinter import LabelFrame, GROOVE, Button, Tk, StringVar, Label
+from tkFileDialog import askopenfilename
 #import tkFont
 
 
 class pgmsface(LabelFrame):
 
+    def getPGMfileName(self):
+        options = {'filetypes': [('pgm files', '.pgm')]}
+        f = askopenfilename(**options)
+        g = f.split('/')
+        self.filenameVar.set(g[len(g) - 1])
+        return f
 
     def __init__(self, x):
         LabelFrame.__init__(self, x)
@@ -22,31 +29,16 @@ class pgmsface(LabelFrame):
         self.config(text = "Testing")
         self.config(labelanchor = "n")
 
-        self.var = StringVar(self)
-        self.var.set("testGOTOpgm")
+        self.loadPGMbutton = Button(self, text="Load PGM")
+        self.loadPGMbutton.grid(row=0, column=0)
+        
+        self.filenameVar = StringVar()
+        self.filenameVar.set("*****.pgm")
+        
+        self.fileNameLabel = Label(self, textvariable=self.filenameVar)
+        self.fileNameLabel.config(relief=GROOVE, borderwidth=2, width=18)
+        self.fileNameLabel.grid(row=0, column=1)
 
-        self.choices = ["testGOTOpgm", \
-                        "testSETMpgm", \
-                        "testLOADpgm", \
-                        "testSETABpgm", \
-                        "testINCpgm", \
-                        "testALUpgm", \
-                        "testMOVpgm", \
-                        "testCBpgm1", \
-                        "testCBpgm2", \
-                        "subtractPGM", \
-                        "multiplyPGM"]
-
-        self.button = Button(self, text="Load Test")
-        self.button.grid(row=0, column=0)
-        
-        self.option = OptionMenu(self, self.var, *self.choices)
-        # Use * when you're not sure how many arguments might be passed to 
-        # your function. This makes it possible to pass an arbitrary number 
-        # of arguments to your function.
-        
-        self.option.grid(row=0, column=1)
-        
         self.pack()
 
 if __name__ == '__main__':

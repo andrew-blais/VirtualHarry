@@ -18,7 +18,7 @@ from memoryface import memoryface
 from core import core
 from decoderface import decoderface
 from pgmsface import pgmsface
-import pgms
+# import pgms
 from processface import processface
 from time import sleep
 from encoderface import encoderface
@@ -235,14 +235,28 @@ class VirtualHarry:
 
 # Run Buttons ==================================================================
 
+    def loadPGM(self):
+            PGM = []
+
+            filename = self.PF.getPGMfileName()
+            pgmFile = open(filename, 'r')
+
+            for LINE in pgmFile:
+                LINE = LINE.split()
+                Address = [ int(i) for i in LINE[0]]
+                Instruction = [ int(i) for i in LINE[1]]
+                PGM.append([Address, Instruction])
+
+            pgmFile.close()
+            
+            self.C.loadPGM(PGM)
 
     def mkRunButtons(self):
         self.DF.runButton.config(command = self.C.run)
         self.DF.stepButton.config(command = self.C.step)
         self.DF.noStepButton.config(command = self.C.noStep)
 
-        self.PF.button.config(command = \
-                lambda : self.C.loadPGM(pgms.testDictionary, self.PF.var))
+        self.PF.loadPGMbutton.config(command = self.loadPGM)
 
         self.MF.CLEAR.config(command = self.C.memClear)
         self.MF.RANDOM.config(command = self.C.memRandom)
