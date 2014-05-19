@@ -32,12 +32,8 @@ class encoderface(LabelFrame):
         self.codeEntry.configure(width=40)
 
         self.codeButton = Button(self, text="Compile")
-        self.codeEval = Label(self, textvariable=self.eval)
-
-        self.codeEval.config(relief=GROOVE, borderwidth=2)
 
         self.VHPL = Label(self, text="VHPL")
-        self.MachineCode = Label(self, text="Machine Code")
 
         self.codeButton.grid(row=0, column=0, rowspan=4, sticky="wens")
 
@@ -47,12 +43,6 @@ class encoderface(LabelFrame):
         self.codeEntry.grid(row=1, column=1, sticky="wens")
         self.codeEntry.config(fg="green", bg="black")
         
-        self.MachineCode.grid(row=2, column=1, sticky="wens")
-        self.MachineCode.config(relief=GROOVE, borderwidth=2)
-        
-        self.codeEval.grid(row=3, column=1, sticky="wens")
-        self.codeEval.config(fg="green", bg="black")
-
         self.pack()
 
 if __name__ == "__main__":

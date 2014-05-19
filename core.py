@@ -268,8 +268,7 @@ class core():
                             self.CALL()
                     else:
                         self.BC()
-        self.TextCallback(\
-            "*************************************************")
+        self.TextCallback("*"*65)
         
         return RUN
 
@@ -296,8 +295,7 @@ class core():
             if self.RUN == True and self.NOSTEP == False:
                 self.pause() # Time to inspect VH
 
-        self.TextCallback(\
-        "================================================================")
+        self.TextCallback("="*65)
 
     def run(self):
         start_new_thread(self.FetchIncrementExecute, ())

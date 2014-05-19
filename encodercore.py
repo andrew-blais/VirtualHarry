@@ -16,36 +16,36 @@ class encodercore:
             self.operationDICT[S[0]]()
         else:
             self.eval = False
-            print "PARSE ERROR: first element error"
+            self.TextCallback("PARSE ERROR: first element error")
 
     def MOV8(self):
-        print "MOV8"
+        self.TextCallback("MOV8")
         self.INSTRUCTION = [0,0]
         S = self.code.split()
 
         if len(S) != 3:
             self.eval = False
-            print "MOV8 ERROR: wrong number of elements"
+            self.TextCallback("MOV8 ERROR: wrong number of elements")
         else:
             if S[1] in self.abcdm1m2xyDICT.keys():
                 self.INSTRUCTION = self.INSTRUCTION + self.abcdm1m2xyDICT[S[1]]
             else:
                 self.eval = False
-                print "MOV8 ERROR: second element error"
+                self.TextCallback("MOV8 ERROR: second element error")
             if S[2] in self.abcdm1m2xyDICT.keys():
                 self.INSTRUCTION = self.INSTRUCTION + self.abcdm1m2xyDICT[S[2]]
             else:
                 self.eval = False
-                print "MOV8 ERROR: third element error"
+                self.TextCallback("MOV8 ERROR: third element error")
 
     def SETAB(self):
-        print "SETAB"
+        self.TextCallback("SETAB")
         self.INSTRUCTION = [0,1]
         S = self.code.split()
 
         if len(S) != 3:
             self.eval = False
-            print "SETAB ERROR: wrong number of elements"
+            self.TextCallback("SETAB ERROR: wrong number of elements")
         else:
             if S[1] in self.abDICT.keys():
                 self.INSTRUCTION = self.INSTRUCTION + self.abDICT[S[1]]
@@ -53,19 +53,19 @@ class encodercore:
                     self.INSTRUCTION = self.INSTRUCTION +  self.mkList(S[2])
                 else:
                     self.eval = False
-                    print "SETAB ERROR: third element error"
+                    self.TextCallback("SETAB ERROR: third element error")
             else:
                 self.eval = False
-                print "SETAB ERROR: second element error"
+                self.TextCallback("SETAB ERROR: second element error")
 
     def ALU(self):
-        print "ALU"
+        self.TextCallback("ALU")
         self.INSTRUCTION = [1,0,0,0]
         S = self.code.split()
 
         if len(S) != 3:
             self.eval = False
-            print "ALU ERROR: wrong number of elements"
+            self.TextCallback("ALU ERROR: wrong number of elements")
         else:
             if S[1] in self.adDICT.keys():
                 self.INSTRUCTION = self.INSTRUCTION + self.adDICT[S[1]]
@@ -73,58 +73,58 @@ class encodercore:
                     self.INSTRUCTION = self.INSTRUCTION + self.functionDICT[S[2]]
                 else:
                     self.eval = False
-                    print "ALU ERROR: third element error"
+                    self.TextCallback("ALU ERROR: third element error")
             else:
                 self.eval = False
-                print "ALU ERROR: second element error"
+                self.TextCallback("ALU ERROR: second element error")
 
     def LOAD(self):
-        print "LOAD"
+        self.TextCallback("LOAD")
         self.INSTRUCTION = [1,0,0,1,0,0]
         S = self.code.split()
 
         if len(S) != 2:
             self.eval = False
-            print "LOAD ERROR: wrong number of elements"
+            self.TextCallback("LOAD ERROR: wrong number of elements")
         else:
             if S[1] in self.abcdDICT.keys():
                 self.INSTRUCTION = self.INSTRUCTION + self.abcdDICT[S[1]]
             else:
                 self.eval = False
-                print "LOAD ERROR: second element error"
+                self.TextCallback("LOAD ERROR: second element error")
 
     def STORE(self):
-        print "STORE"
+        self.TextCallback("STORE")
         self.INSTRUCTION = [1,0,0,1,1,0]
         S = self.code.split()
 
         if len(S) != 2:
             self.eval = False
-            print "STORE ERROR: wrong number of elements"
+            self.TextCallback("STORE ERROR: wrong number of elements")
         else:
             if S[1] in self.abcdDICT.keys():
                 self.INSTRUCTION = self.INSTRUCTION + self.abcdDICT[S[1]]
             else:
                 self.eval = False
-                print "STORE ERROR: second element error"
+                self.TextCallback("STORE ERROR: second element error")
 
     def RET(self):
-        print "RET"
+        self.TextCallback("RET")
         S = self.code.split()
         if len(S) != 1:
             self.eval = False
-            print "RET ERROR: wrong number of elements"
+            self.TextCallback("RET ERROR: wrong number of elements")
         else:
             self.INSTRUCTION = [1,0,1,0,1,1,1,0]
 
     def MOV16(self):
-        print "MOV16"
+        self.TextCallback("MOV16")
         self.INSTRUCTION = [1,0,1,0]
         S = self.code.split()
 
         if len(S) != 3:
             self.eval = False
-            print "MOV16 ERROR: wrong number of elements"
+            self.TextCallback("MOV16 ERROR: wrong number of elements")
         else:
             if S[1] in self.xypcDICT.keys():
                 self.INSTRUCTION = self.INSTRUCTION + self.xypcDICT[S[1]]
@@ -132,15 +132,15 @@ class encodercore:
                     self.INSTRUCTION = self.INSTRUCTION + self.mxyjDICT[S[2]]
                 else:
                     self.eval = False
-                    print "MOV16 ERROR: third element error"
+                    self.TextCallback("MOV16 ERROR: third element error")
             else:
                 self.eval = False
-                print "MOV16 ERROR: second element error"
+                self.TextCallback("MOV16 ERROR: second element error")
 
         self.INSTRUCTION = self.INSTRUCTION + [0]
 
     def INC(self):
-        print "INC"
+        self.TextCallback("INC")
         self.INSTRUCTION = [1,0,1,1,0,0,0,0]
 
     def checkForm(self, x, n):
@@ -156,13 +156,13 @@ class encodercore:
         return [ int(i) for i in x ]
 
     def GOTO(self):
-        print "GOTO"
+        self.TextCallback("GOTO")
         self.INSTRUCTION = [1,1,1,0,0,1,1,0]
         S = self.code.split()
 
         if len(S) != 3:
             self.eval = False
-            print "GOTO ERROR: wrong number of elements"
+            self.TextCallback("GOTO ERROR: wrong number of elements")
         else:
             if self.checkForm(S[1], 8) == True:
                 self.ADDRESS1 = self.mkList(S[1])
@@ -170,59 +170,59 @@ class encodercore:
                     self.ADDRESS2 = self.mkList(S[2])
                 else:
                     self.eval = False
-                    print "GOTO ERROR: third element error"
+                    self.TextCallback("GOTO ERROR: third element error")
             else:
                 self.eval = False
-                print "GOTO ERROR: second element error"
+                self.TextCallback("GOTO ERROR: second element error")
 
     def SETM(self):
-        print "SETM"
+        self.TextCallback("SETM")
         self.INSTRUCTION = [1,1,0,0,0,0,0,0]
         S = self.code.split()
 
         if len(S) != 3:
             self.eval = False
-            print "SETM ERROR: wrong number of elements"
+            self.TextCallback("SETM ERROR: wrong number of elements")
         else:
             if self.checkForm(S[1], 8) == True:
                 self.ADDRESS1 = self.mkList(S[1])
             else:
                 self.eval = False
-                print "SETM ERROR: second element error"
+                self.TextCallback("SETM ERROR: second element error")
             if self.checkForm(S[2], 8) == True:
                 self.ADDRESS2 = self.mkList(S[2])
             else:
                 self.eval = False
-                print "SETM ERROR: third element error"
+                self.TextCallback("SETM ERROR: third element error")
 
     def CALL(self):
-        print "CALL"
+        self.TextCallback("CALL")
         self.INSTRUCTION = [1,1,1,0,0,1,1,1]
         S = self.code.split()
 
         if len(S) != 3:
             self.eval = False
-            print "CALL ERROR: wrong number of elements"
+            self.TextCallback("CALL ERROR: wrong number of elements")
         else:
             if self.checkForm(S[1], 8) == True:
                 self.ADDRESS1 = self.mkList(S[1])
             else:
                 self.eval = False
-                print "CALL ERROR: second element error"
+                self.TextCallback("CALL ERROR: second element error")
             if self.checkForm(S[2], 8) == True:
                 self.ADDRESS2 = self.mkList(S[2])
             else:
                 self.eval = False
-                print "CALL ERROR: third element error"
+                self.TextCallback("CALL ERROR: third element error")
 
     def BC(self):
-        print "BC"
+        self.TextCallback("BC")
         self.INSTRUCTION = [1,1,1]
         S = self.code.split()
 
         if len(S) != 7:
             self.eval = False
-            print "BC ERROR: wrong number of elements"
+            self.TextCallback("BC ERROR: wrong number of elements")
         else:
             if S[1] in self.signDICT.keys():
                 self.INSTRUCTION = self.INSTRUCTION + self.signDICT[S[1]]
@@ -244,25 +244,28 @@ class encodercore:
                                     self.ADDRESS2 = self.mkList(S[6])
                                 else:
                                     self.eval = False
-                                    print "BC ERROR: seventh element error"                            
+                                    self.TextCallback("BC ERROR: seventh element error")                            
                             else:
                                 self.eval = False
-                                print "BC ERROR: sixth element error"
+                                self.TextCallback("BC ERROR: sixth element error")
                         else:
                             self.eval = False
-                            print "BC ERROR: fifth element error"
+                            self.TextCallback("BC ERROR: fifth element error")
                     else:
                         self.eval = False
-                        print "BC ERROR: fourth element error"
+                        self.TextCallback("BC ERROR: fourth element error")
                 else:
                     self.eval = False
-                    print "BC ERROR: third element error"
+                    self.TextCallback("BC ERROR: third element error")
             else:
                 self.eval = False
-                print "BC ERROR: second element error"
+                self.TextCallback("BC ERROR: second element error")
 
     def setCode(self, x):
         self.code = x
+        
+    def setTextCallback(self, tcb):
+        self.TextCallback = tcb
 
     def __init__(self):
 

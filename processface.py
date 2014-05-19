@@ -27,7 +27,7 @@ class processface(LabelFrame):
         self.config(text = "Process")
         self.config(labelanchor = "n")
     
-        self.text = Text(self, height=21, width=80)
+        self.text = Text(self, height=21, width=85)
         self.text.configure(font=("Courier", 11, "bold"), bg="black", fg="green")
         
         self.scroll = Scrollbar(self, command=self.text.yview)

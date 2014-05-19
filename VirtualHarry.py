@@ -6,7 +6,7 @@
 # GNU General Public License version 3.
 
 
-from Tkinter import Tk, Toplevel, Frame
+from Tkinter import Tk, Toplevel, Frame, RIGHT, LEFT
 from aluface import aluface
 from functionface import functionface
 from statesface import statesface
@@ -21,6 +21,7 @@ from pgmsface import pgmsface
 from processface import processface
 from time import sleep
 from encoderface import encoderface
+from infoface import infoface
 
 
 class VirtualHarry:
@@ -42,7 +43,7 @@ class VirtualHarry:
         
         self.WHOLE = Toplevel(r)
         self.WHOLE.title("Virtual Harry")
-        self.WHOLE.geometry("+70+40")
+        self.WHOLE.geometry("+40+35")
         
         self.UNITY = Frame(self.WHOLE)
         self.UNITY.grid(row=0, column=0)
@@ -64,20 +65,35 @@ class VirtualHarry:
         self.SEQUENCERFACE = Frame(self.WHOLE)
         self.SEQUENCERFACE.grid(row=0, column=1)
 
-        self.ABF = addressbusface(self.SEQUENCERFACE)
-        self.DF = decoderface(self.SEQUENCERFACE)
-        self.DBF = databusface(self.SEQUENCERFACE)
-        self.PF = pgmsface(self.SEQUENCERFACE)
-        self.MF = memoryface(self.SEQUENCERFACE)
+        
+        self.F1 = Frame(self.SEQUENCERFACE)
+        self.F2 = Frame(self.SEQUENCERFACE)        
+        self.F3 = Frame(self.SEQUENCERFACE)
+
+        self.ABF = addressbusface(self.F1)
+        self.IFACE = infoface(self.F1)
+
+        self.DF = decoderface(self.F2)
+        self.MF = memoryface(self.F2)
+        
+        self.PF = pgmsface(self.F3)
+        self.DBF = databusface(self.F3)        
+
+        self.ABF.pack(side=LEFT, padx=3)
+        self.IFACE.pack(side=RIGHT, padx=3)
+        self.DF.pack(side=LEFT, padx=3)
+        self.MF.pack(side=RIGHT, padx=3)
+        self.PF.pack(side=LEFT, padx=3)
+        self.DBF.pack(side=RIGHT, padx=3)
+
         self.PROCF = processface(self.SEQUENCERFACE)
 
-        self.ABF.grid(row=0, column=0, columnspan=2)
-        self.DF.grid(row=1, column=0)
-        self.DBF.grid(row=1, column=1)
-        self.PF.grid(row=2, column=0)
-        self.MF.grid(row=2, column=1)
+        self.F1.grid(row=0, column=0)
+        self.F2.grid(row=1, column=0)
+        self.F3.grid(row=2, column=0)
+
         self.PROCF.grid(row=3, column=0, columnspan=2)
-        
+
 # Paint Functions ==============================================================
 
     def paintALU(self):
@@ -157,7 +173,7 @@ class VirtualHarry:
 
     def paintText(self, t):
         self.PROCF.addText(t)
-        sleep(0.03)
+        sleep(0.2)
 
     def paintALL(self):
         self.paintALU()
@@ -234,6 +250,13 @@ class VirtualHarry:
 
 # Run Buttons ==================================================================
 
+    def loadREADME(self):
+        readmefile = open("README", "r")
+        for LINE in readmefile:
+            self.PROCF.addText(LINE[0:len(LINE) - 1])
+            #print LINE[0:len(LINE) - 1]
+        readmefile.close()
+
     def loadPGM(self):
             PGM = []
 
@@ -261,6 +284,8 @@ class VirtualHarry:
         self.MF.RANDOM.config(command = self.C.memRandom)
 
         self.EF.codeButton.config(command = self.parse)
+
+        self.IFACE.readmeButton.config(command=self.loadREADME)
 
 # Run Buttons ==================================================================
 
@@ -297,6 +322,7 @@ class VirtualHarry:
         self.C.runClockThread()
 
         self.C.setTextCallback(self.paintText)
+        self.C.ENCODER.setTextCallback(self.paintText)
 
         self.VH.mainloop()
 
