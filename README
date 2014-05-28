@@ -9,20 +9,77 @@ website.
 
 web.cecs.pdx.edu/~harry/Relay/
 
+The best way to read this document is to start VirtualHarry. This can be done 
+on the command line, with: 
+
+>>> ./VirtualHarry.py
+
+Then, press the red README button, which is in the upper right hand corner, and 
+this document will appear in the area labeled "Inside VH's Head". This is where 
+system messages are displayed. 
+
+VH is a very simple computer. It is so simple that it only its only inputs and 
+outputs are 0s and 1s. Well, this is true of the real, physical, relay Harry.
+Virtual Harry is partly a simulation of the relay Harry with a wrapper that 
+makes it possible to manipulate the simulation in ways that the relay Harry 
+cannot be. For example, the relay Harry must be programmed by flipping many, 
+many switches. VirtualHarry can be programmed by selecting a much more easily 
+constructed text file. This is curious, because part of the motivation for 
+creating harry was to see what programming a computer by flipping switches 
+would be like. The answer is, simply put, extremely tedious. 
+It was more interesting to figure out how to get a virtual machine to respond 
+to 0s and 1s in a way that closely paralleled the way that the relay Harry 
+responds. 
+
+VH has two main ways to input 0s and 1s. (1) The Data Bus and (2) the Address 
+Bus. These two busses are located on the right. 
+
+Just above the system messages area on the right is an area labeled "8 bit Data 
+Bus". It consists of eight buttons that are initially labeled "0" and 
+that are used to control the values on the Data Bus. In the relay Harry, the 
+data bus consists of wires that carry electric signals. In VH, the Data Bus is
+an imitation of these wires. Instead of an electric signal, there are 0s and 
+1s. Instead of electric charges on wires, there are 0s and 1s in lists or 
+arrays. Instead of being being switched on or off, a list has either a one or a
+zero. Instead of current flowing, 0s and 1s are copied from the source to the 
+Data Bus and then copied from the Data Bus to the destination. 
+
+To change the values on the Data Bus, click the buttons. If the button is 0 
+(or 1), it changes to 1 (or 0). Experiment, enter 00110011 into the data bus. 
+
+Once data is on the Data Bus, where can it go? One place it can go is what 
+might be thought of as VH's scratch pad. This is the Register, which is on the 
+top right. The Register has three areas. 
+
+First, there is the up time clock. It has nothing to do with VH's computing 
+however. There was an empty space and I thought it would be cool to put an up 
+time clock there. It seems obvious that there should be a way to implement 
+this program in a way that also simulates a clock and the timing required by 
+actual physical relays. This might be done with bunches of threads, I suspect. 
+
+
+
+
+
+Now, the next two key components are the ALU and the Register. The ALU is on 
+the right near the bottom just above the area labeled "Encoder"; 
+
+
+
 He has a number of documents explaining how he built his relay computer. About 
 two years ago, I though that it would be interesting to write a simulation of 
-his machine. At first, I tried javascript. The result was a mess. Partly because
-javascript is complicated by having to play nice with a bunch of different 
-browsers. Partly because writing a simulation of the physical machine is kind of
-hard. I partly got as far as I have by separating what the relays did from how 
-the relays worked together to do what they do. Instead of thinking of relays, I 
-thought of a relatively smart winged monkey flying amongst rows of boxes filled 
-with 0s and 1s. 
+his machine. At first, I tried javascript. The result was a mess. Partly 
+because javascript is complicated by having to play nice with a bunch of 
+different browsers. Partly because writing a simulation of the physical machine 
+is kind of hard. I partly got as far as I have by separating what the relays 
+did from how the relays worked together to do what they do. Instead of thinking 
+of relays, I thought of a relatively smart winged monkey flying amongst rows of 
+boxes filled with 0s and 1s. 
 
 It has occurred to me that VH is a piece of conceptual art. It explores the
 platitude that computers are, at bottom, 0s and 1s. If you think about it, 
-there is no reason that VH could not have been implemented as a very long series
-of boxes, or as a very long tape, whose contents are manipulated by the 
+there is no reason that VH could not have been implemented as a very long 
+series of boxes, or as a very long tape, whose contents are manipulated by the 
 extremely clever winged monkey. So, if you see how VH works, you see how a 
 Turing machine works. I think. 
 
@@ -34,11 +91,9 @@ alu.py, control.py, memory.py, and register.py. The alu can be run on the
 command line. Oh, yes, I used Eclipse as my code editor; the various eclipse 
 files are in this archive. 
 
-VirtualHarry is run with: ./VirtualHarry.py
-
-The function of the alu can be set with F0, F1 and F2. Doing this determines the
-result. The chosen function is highlighted in red. Pushing "Send Result to Data 
-Bus" does exactly that. One of the ways that VH differs from Harry's relay 
+The function of the alu can be set with F0, F1 and F2. Doing this determines 
+the result. The chosen function is highlighted in red. Pushing "Send Result to 
+Data Bus" does exactly that. One of the ways that VH differs from Harry's relay 
 computer is that the result of the alu is not automatically "gated" onto the 
 data bus. It is necessary to explicitly move the result of the alu to the data
 bus. This also makes for a difference in the way that the execute phase works,
@@ -62,26 +117,21 @@ Essentially, more or less, use a procedure somewhat like this:
 (4) If the command wasn't halt, go back to (1), else your'e done. (Well, maybe
     not, since halt may be buried somewhere that the program eventually finds.)
 
-I have made a number of functions in the core that write various programs to the
-memory. Under "Testing", select a test program such as "multiplyPGM" or 
-"testGOTOpgm". Press "Load Test". Then decided whether you want to step through
-the program's commands or have it just run through all of them without pause.
-
-(Need a function that clears the memory?) 
-
-(By the way, these functions call on lists stored in pgms.py. If you look 
-there, you will see lists of tuples whose first element is a list that 
-corresponds to a memory address and whose second element is a list that 
-corresponds to a command expressed in 0s and 1s that will be stored or written 
-to that address. The significantly decluttered core.py.)
-
-In any case....
+I have made a number of files that store the 0s and 1s that encode a number of 
+VH programs. These are the *.pgm files. They are ASCII files that can be edited
+in the standard ways. Pressing "Load PGM" brings up a file choosing menu. 
+Selecting the file then writes the program to memory. Select a test program 
+such as "multiplyPGM" or "testGOTOpgm". Then decided whether you want to step 
+through the program's commands or have it just run through all of them without 
+pause.
 
 If the later, press the "no step" button. It will turn red. Then press the RUN 
 button. You will see a description of each command pass by on the command line. 
+You can scroll through the history to see what VH did. 
 
 If the former, leave the "no step" button alone, and simply press RUN. Then, to 
 proceed through the series of commands, press STEP.
+
 
 For example, enter "00001010" (10) into the data bus.
 Then press "Load C".
@@ -102,11 +152,7 @@ arguments are entered into X and Y. Note that M1 must be empty.
 
 Feedback is desirable. I'd like to see additional tests.
 
-There is an uptime clock. It has nothing to do with VH's computing however. 
-There was an empty space and I thought it would be cool to put an uptime clock
-there. It seems obvious that there should be a way to implement this program in
-a way that also simulates a clock and the timing required by actual physical
-relays. This might be done with buches of threads, I suspect. Human Harry, 
+Human Harry, 
 Porter that is, has a very interesting and informative pdf book that describes
 the workings of the timings and such.
 

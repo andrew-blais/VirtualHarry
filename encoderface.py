@@ -23,8 +23,9 @@ class encoderface(LabelFrame):
 
         self.INSTRUCTION = StringVar()
         self.INSTRUCTION.set("Instruction")
-        self.eval = StringVar()
-        self.eval.set("Evaluation")
+        
+        self.machinecode = StringVar()
+        self.machinecode.set("")
 
         self.codeEntry = Entry(self, textvariable=self.INSTRUCTION)
 

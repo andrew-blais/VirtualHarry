@@ -24,14 +24,14 @@ class processface(LabelFrame):
 #        self.default_font.configure(family="Helvetica",size=10) 
         self.config(relief=GROOVE)
         self.config(borderwidth=2)
-        self.config(text = "Process")
+        self.config(text = "Inside VH's Head")
         self.config(labelanchor = "n")
     
-        self.text = Text(self, height=21, width=85)
+        self.text = Text(self, height=22, width=85)
         self.text.configure(font=("Courier", 11, "bold"), bg="black", fg="green")
-        
+
         self.scroll = Scrollbar(self, command=self.text.yview)
-        
+
         self.text.configure(yscrollcommand=self.scroll.set)
 
         self.text.pack(side=LEFT, padx=3, pady=2)

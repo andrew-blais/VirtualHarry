@@ -294,10 +294,12 @@ class VirtualHarry:
         self.C.ENCODER.setCode(I)
         self.C.ENCODER.parse()
 
-        if self.C.ENCODER.eval == True:
-            self.EF.eval.set(str(self.C.ENCODER.INSTRUCTION))
-        else:
-            self.EF.eval.set("> INVALID <")
+        #if self.C.ENCODER.evaluation == True:
+        #    self.paintText( str(self.C.ENCODER.INSTRUCTION) )
+            #self.EF.machinecode.set(str(self.C.ENCODER.INSTRUCTION))
+        #else:
+        #    self.paintText("*** Invalid Code ***")
+            #self.EF.machinecode.set("> INVALID <")
 
 # Initialization ===============================================================
 
